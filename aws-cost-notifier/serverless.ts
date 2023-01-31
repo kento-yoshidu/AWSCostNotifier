@@ -1,6 +1,6 @@
 import type { AWS } from '@serverless/typescript';
 
-import hello from '@functions/hello';
+import awsCostNotifier from '@functions/awsCostNotifier';
 
 const serverlessConfiguration: AWS = {
   service: 'aws-cost-notifier',
@@ -20,7 +20,7 @@ const serverlessConfiguration: AWS = {
     },
   },
   // import the function via paths
-  functions: { hello },
+  functions: { awsCostNotifier },
   package: { individually: true },
   custom: {
     esbuild: {
