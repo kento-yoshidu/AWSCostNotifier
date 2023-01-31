@@ -5,21 +5,23 @@ import awsCostNotifier from '@functions/awsCostNotifier';
 const serverlessConfiguration: AWS = {
   service: 'aws-cost-notifier',
   frameworkVersion: '3',
-  plugins: ['serverless-esbuild'],
+  plugins: [
+    'serverless-esbuild',
+    'serverless-api-gateway-throttling'
+  ],
   provider: {
     name: 'aws',
     runtime: 'nodejs14.x',
     region: "ap-northeast-1",
     apiGateway: {
       minimumCompressionSize: 1024,
-      shouldStartNameWithService: true,
+      shouldStartNameWithService: true
     },
     environment: {
       AWS_NODEJS_CONNECTION_REUSE_ENABLED: '1',
-      NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000',
-    },
+      NODE_OPTIONS: '--enable-source-maps --stack-trace-limit=1000'
+    }
   },
-  // import the function via paths
   functions: { awsCostNotifier },
   package: { individually: true },
   custom: {
@@ -31,9 +33,13 @@ const serverlessConfiguration: AWS = {
       target: 'node14',
       define: { 'require.resolve': undefined },
       platform: 'node',
-      concurrency: 10,
+      concurrency: 10
     },
-  },
-};
+    apiGatewayThrottling: {
+      maxRequestsPerSecond: 5,
+      maxConcurrentRequests: 3
+    }
+  }
+}
 
-module.exports = serverlessConfiguration;
+module.exports = serverlessConfiguration
