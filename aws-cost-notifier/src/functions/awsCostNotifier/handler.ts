@@ -4,10 +4,10 @@ import { middyfy } from '@libs/lambda';
 
 import schema from './schema';
 
-const hello: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
+const awsCostNotifier: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
   return formatJSONResponse({
     message: `Hello , welcome to the exciting Serverless world!`,
   });
 };
 
-export const main = middyfy(hello);
+export const main = middyfy(awsCostNotifier);
