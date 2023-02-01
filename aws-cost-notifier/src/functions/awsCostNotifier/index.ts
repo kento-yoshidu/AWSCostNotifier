@@ -16,6 +16,9 @@ export default {
         },
         */
       },
+      schedule: {
+        rate: "cron(0 0 * * ? *)"
+      }
     },
   ],
 };
