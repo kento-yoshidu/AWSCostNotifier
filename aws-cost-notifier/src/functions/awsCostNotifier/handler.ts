@@ -1,13 +1,16 @@
-import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
-import { formatJSONResponse } from '@libs/api-gateway';
+// import type { ValidatedEventAPIGatewayProxyEvent } from '@libs/api-gateway';
+// import { formatJSONResponse } from '@libs/api-gateway';
 import { middyfy } from '@libs/lambda';
 
-import schema from './schema';
+// import schema from './schema';
 
-const awsCostNotifier: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
-  return formatJSONResponse({
-    message: `Hello , welcome to the exciting Serverless world!`,
-  });
+import { IncomingWebhook } from '@slack/webhook'
+
+// const awsCostNotifier: ValidatedEventAPIGatewayProxyEvent<typeof schema> = async () => {
+const awsCostNotifier = async () => {
+  const slackWebHookUrl = process.env.SLACK_WEBHOOK_URL
+  const slackWebHook = new IncomingWebhook(slackWebHookUrl)
+  await slackWebHook.send("Hello Slack WebHook")
 };
 
 export const main = middyfy(awsCostNotifier);

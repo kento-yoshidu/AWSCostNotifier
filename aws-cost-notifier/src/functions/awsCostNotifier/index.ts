@@ -22,6 +22,6 @@ export default {
     },
   ],
   environment: {
-    SLACK_WEBHOOK_URL: "${ssm:cost_notifier_url}"
+    SLACK_WEBHOOK_URL: "${ssm:cost_notifier_url_ts}"
   },
 };
