@@ -11,7 +11,7 @@ const serverlessConfiguration: AWS = {
   plugins: ["serverless-webpack"],
   functions: {
     hello: {
-      handler: 'first.hello',
+      handler: 'src/first.hello',
       /*
       events: [
         {
