@@ -18,7 +18,10 @@ const serverlessConfiguration: AWS = {
             rate: ["cron(0 0 * * ? *)"]
           }
         }
-      ]
+      ],
+      environment: {
+        SLACK_WEBHOOK_URL: "${ssm:cost_notifier_url_ts}"
+      }
     }
   }
 }
