@@ -10,18 +10,15 @@ const serverlessConfiguration: AWS = {
   },
   plugins: ["serverless-webpack"],
   functions: {
-    hello: {
-      handler: 'src/first.hello',
-      /*
+    costNotifier: {
+      handler: "src/costNotifier.handler",
       events: [
         {
-          http: {
-            method: 'get',
-            path: 'hello',
+          schedule: {
+            rate: ["cron(0 0 * * ? *)"]
           }
         }
       ]
-      */
     }
   }
 }
