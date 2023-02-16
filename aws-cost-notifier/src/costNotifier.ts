@@ -21,16 +21,8 @@ export const handler = async (event, context) => {
 
   const usdCost = costAndUsage.ResultsByTime[0].Total.UnblendedCost.Amount
 
-  console.log(usdCost)
-
-  /*
   const slackWebhookUrl = process.env.SLACK_WEBHOOK_URL
   const slackWebhook = new IncomingWebhook(slackWebhookUrl)
 
-  await slackWebhook.send("Hello Slack Webhook")
-
-  return {
-    url: slackWebhookUrl
-  }
-  */
+  await slackWebhook.send(`今月のAWS使用料: $${usdCost}`)
 }
