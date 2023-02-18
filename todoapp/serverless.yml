@@ -28,12 +28,17 @@ functions:
         Action:
           - ce:GetCostAndUsage
         Resource: '*'
-  hello:
-    handler: src/hello.handler
+  taskPost:
+    handler: src/taskHandler.post
     events:
       - httpApi:
-          method: get
-          path: /hello
+          method: post
+          path: /tasks
+    iamRoleStatements:
+      - Effect: Allow
+        Action:
+          - dynamodb:PutItem
+        Resource: 'arn:aws:dynamodb:*:*:table/tasks'
 
 resources:
   Resources:
