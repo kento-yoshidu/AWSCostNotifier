@@ -17,17 +17,18 @@ custom:
     maxConcurrentRequests: 5
 
 functions:
-  costNotifier:
-    handler: src/costNotifier.handler
+  taskList:
+    handler: src/taskHandler.list
     events:
-      - schedule: cron(0 0 * * ? *)
-    environment:
-      SLACK_WEBHOOK_URL: ${ssm:cost_notifier_url_ts}
+      - httpApi:
+          method: get
+          path: /tasks
     iamRoleStatements:
       - Effect: Allow
         Action:
-          - ce:GetCostAndUsage
-        Resource: '*'
+          - dynamodb:Scan
+        Resource: 'arn:aws:dynamodb:*:*:table/tasks'
+
   taskPost:
     handler: src/taskHandler.post
     events:
