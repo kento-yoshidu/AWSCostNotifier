@@ -28,3 +28,25 @@ functions:
         Action:
           - ce:GetCostAndUsage
         Resource: '*'
+  hello:
+    handler: src/hello.handler
+    events:
+      - httpApi:
+          method: get
+          path: /hello
+
+resources:
+  Resources:
+    TasksDynamoDBTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: tasks
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
