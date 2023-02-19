@@ -10,7 +10,7 @@ export async function list() {
     TableName: "tasks"
   }).promise()
 
-  const tasks = result.Items?.map((item) => {
+  const tasks = result.Items.map((item) => {
     return {
       id: item.id.S,
       title: item.title.S
