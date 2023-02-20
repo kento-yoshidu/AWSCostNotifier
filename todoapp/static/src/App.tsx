@@ -22,9 +22,9 @@ function App() {
 
     const { tasks } = await result.json()
 
-    await setTaskList(tasks)
+    console.log(tasks)
 
-    console.log(taskList)
+    await setTaskList(tasks)
   }
 
   return (
