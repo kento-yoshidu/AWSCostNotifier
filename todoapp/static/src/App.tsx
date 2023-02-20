@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 
-const url = process.env.REACT_APP_API_GATEWAY_URL
 
 type Task = {
   id: string,
@@ -10,28 +9,28 @@ type Task = {
 function App() {
   const [task, setTask] = useState("")
 
-  const [taskList, setTaskList] = useState<Task[]>([{ id: "hoge", title: "hoho" }])
+  const [taskList, setTaskList] = useState<Task[] | null>(null)
 
   const handleChange = (e: any) => {
     setTask(e.target.value)
   }
 
   const handleClick = async () => {
-    const url = "https://i7jw9utro9.execute-api.ap-northeast-1.amazonaws.com/tasks"
+    const url = `${process.env.REACT_APP_API_GATEWAY_URL}/tasks`
 
     const result = await fetch(url)
 
-    const tasks: Task = await result.json()
+    const { tasks } = await result.json()
 
-    setTaskList((taskList) => ([...taskList, tasks]))
+    await setTaskList(tasks)
 
-    console.log(taskList, tasks)
+    console.log(taskList)
   }
 
   return (
     <div className="App">
       <form>
-        <h1>Todo App</h1>
+        <h1>Todo App 05</h1>
 
         <input type="text" onChange={handleChange} />
 
@@ -41,11 +40,13 @@ function App() {
       </form>
 
       <ul>
-        {taskList && taskList.map((task) => {
-          return (
-            <p>{task.title}</p>
-          )
-        })}
+        {taskList && (
+          <>
+            {taskList.map((task: Task) => (
+              <li key={task.id}>{task.title}</li>
+            ))}
+          </>
+        )}
       </ul>
     </div>
   )
