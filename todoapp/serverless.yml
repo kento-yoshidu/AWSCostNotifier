@@ -15,6 +15,7 @@ provider:
     cors:
       allowedOrigins:
         - "http://${self:custom.bucketName}.s3-website-ap-northeast-1.amazonaws.com"
+        - "http://localhost:3000"
 
 custom:
   apiGatewayThrottling:
