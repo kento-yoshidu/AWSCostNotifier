@@ -1,41 +1,55 @@
-import React, { useState } from 'react'
-import useSWR from "swr"
+import React, { useState, useRef, useCallback } from 'react'
+import { useSyncExternalStore } from 'react'
 
 type Task = {
   id: string,
   title: string
 }
 
-/* 
-const fetcher = (...args) => fetch(...args).then(res => {
-  res.json()
-})
-*/
+type Tasks = {
+  tasks: Task[]
+}
+
+function useData<T>(url: string): T | undefined {
+  const data$ = useRef<T>()
+
+  const subscribe = useCallback(
+    (onStoreChange: () => void): (() => void) => {
+      const controller = new AbortController()
+
+      fetch(url, { signal: controller.signal })
+        .then((res) => res.json())
+        .then((data) => {
+          data$.current = data
+
+          onStoreChange()
+        })
+
+      return () => {
+        controller.abort()
+      }
+    },
+    [url]
+  )
+
+  return useSyncExternalStore(subscribe, () => data$.current)
+}
 
 function App() {
+  const data = useData<Tasks>(`${process.env.REACT_APP_API_GATEWAY_URL}/tasks`)
+
+  return (
+    <>
+      <h1>hog</h1>
+
+      <ul>
+        {data && data.tasks.map((task) => (
+          <li key={task.id}>{task.title}</li>
+        ))}
+      </ul>
+    </>
+  )
   /*
-  // const { data, error, isLoading } = useSWR(`${process.env.REACT_APP_API_GATEWAY_URL}/tasks`, fetcher)
-
-  const options = {
-    mode: "cors",
-    headers: {
-      
-    }
-  }
-
-  const { data, error, isLoading } = useSWR([`${process.env.REACT_APP_API_GATEWAY_URL}/tasks/`, options], fetcher, {
-    
-  })
-
-  if (error) return <div>error has occurred!</div>
-
-  if (isLoading) return <h1>Loading...</h1>
-
-  if (!isLoading) {
-    console.log({ data })
-  }
-  */
-
   const [taskList, setTaskList] = useState<Task[] | null>(null)
 
   const handleClick = async () => {
@@ -65,6 +79,7 @@ function App() {
       </ul>
     </div>
   )
+  */
 }
 
-export default App;
+export default App

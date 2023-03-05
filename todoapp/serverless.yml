@@ -52,6 +52,13 @@ functions:
           - dynamodb:PutItem
         Resource: 'arn:aws:dynamodb:*:*:table/tasks'
 
+  taskNotifier:
+    handler: src/taskNotifier.handler
+    events:
+      - schedule: cron(0 0 * * ? *)
+    environment:
+      SLACK_WEBHOOK_URL: ${ssm:todo_slack_notifier_url}
+
 resources:
   Resources:
     TasksDynamoDBTable:
