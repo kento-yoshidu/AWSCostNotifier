@@ -23,7 +23,7 @@ export async function list() {
 }
 
 export async function post(event, context) {
-  const requestBody = JSON.parse(event.body)  
+  const requestBody = JSON.parse(event.body)
 
   const item = {
     id: { S: crypt.randomUUID() },
