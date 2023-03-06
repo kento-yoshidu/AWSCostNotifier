@@ -40,48 +40,19 @@ function App() {
 
   return (
     <>
-      <h1 className="text-3xl font-bold underline">
-        Hello world!
-      </h1>
+      <div className="w-2/3 border">
+        <h1 className="text-3xl font-bold underline">
+          AWS Todo App
+        </h1>
 
-      <ul>
-        {data && data.tasks.map((task) => (
-          <li key={task.id}>{task.title}</li>
-        ))}
-      </ul>
+        <ul>
+          {data && data.tasks.map((task) => (
+            <li key={task.id}>{task.title}</li>
+          ))}
+        </ul>
+      </div>
     </>
   )
-  /*
-  const [taskList, setTaskList] = useState<Task[] | null>(null)
-
-  const handleClick = async () => {
-    const url = `${process.env.REACT_APP_API_GATEWAY_URL}/tasks`
-
-    const result = await fetch(url)
-
-    const { tasks } = await result.json()
-
-    setTaskList(tasks)
-  }
-
-  return (
-    <div className="App">
-      <form>
-        <button onClick={handleClick} type="button">送信</button>
-      </form>
-
-      <ul>
-        {taskList && (
-          <>
-            {taskList.map((task: Task) => (
-              <li key={task.id}>{task.title}</li>
-            ))}
-          </>
-        )}
-      </ul>
-    </div>
-  )
-  */
 }
 
 export default App
